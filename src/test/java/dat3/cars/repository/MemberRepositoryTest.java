@@ -18,7 +18,7 @@ class MemberRepositoryTest {
     @BeforeAll
     public static void setUpData(@Autowired MemberRepository memberRepository){
         Member member1 = new Member("userxx", "test12", "a@b.dk", "Kurt", "Kurtsen",
-                "Gadevej", "Helvede", "666", true, "Elite");
+                "Gadevej", "Helvede", "666");
 
         memberRepository.save(member1);
 

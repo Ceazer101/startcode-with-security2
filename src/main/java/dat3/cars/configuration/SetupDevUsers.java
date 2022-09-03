@@ -35,7 +35,7 @@ public class SetupDevUsers implements ApplicationRunner {
         carRepository.save(car);
 
         Member m1 = new Member("userxx", passwordUsedByAll, "a@b.dk", "Kurt", "Kurtsen",
-                "Gadevej", "Helvede", "666", true, "Elite");
+                "Gadevej", "Helvede", "666");
         memberRepository.save(m1);
     }
 

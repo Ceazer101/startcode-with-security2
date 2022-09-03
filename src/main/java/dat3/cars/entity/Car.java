@@ -1,45 +1,43 @@
 package dat3.cars.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    int id;
 
-    String brand;
-    String model;
-    int pricePrDay;
-    int bestDiscount;
+    @Column(length = 50,nullable = false)
+    private String brand;
 
-    public Car(String brand, String model, int pricePrDay, int bestDiscount) {
+    @Column(length= 50, nullable = false)
+    private String model;
+
+    double pricePrDay;
+
+    double bestDiscount;
+
+    @CreationTimestamp
+    LocalDateTime created;
+
+    @UpdateTimestamp
+    LocalDateTime edited;
+
+    public Car(String brand, String model, double pricePrDay, double bestDiscount) {
         this.brand = brand;
         this.model = model;
         this.pricePrDay = pricePrDay;
         this.bestDiscount = bestDiscount;
-    }
-
-    public Car() {
-    }
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", pricePrDay=" + pricePrDay +
-                ", bestDiscount=" + bestDiscount +
-                '}';
     }
 }
