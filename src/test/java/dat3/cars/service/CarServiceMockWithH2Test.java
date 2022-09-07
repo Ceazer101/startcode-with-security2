@@ -56,7 +56,7 @@ class CarServiceMockWithH2Test {
         Car c = new Car("Volkswagen", "Polo", 1000, 100);
         CarRequest request = new CarRequest(c);
         carService.addCar(request);
-        assertEquals(3,carRepository.count());
+        assertEquals(2,carRepository.count());
     }
 
     //unit test works only works with id = 3
