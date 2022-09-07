@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,9 +14,13 @@ import java.time.LocalDate;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReservationResponse {
 
-    LocalDate date;
+    int id;
+    LocalDateTime reservationDate;
+    LocalDate rentalDate;
 
     public ReservationResponse(Reservation r) {
-        this.date = r.getRentalDate();
+        this.id = r.getId();
+        this.reservationDate = r.getReservationDate();
+        this.rentalDate = r.getRentalDate();
     }
 }
