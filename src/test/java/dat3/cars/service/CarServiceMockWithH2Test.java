@@ -32,16 +32,18 @@ class CarServiceMockWithH2Test {
 
     public static CarRepository carRepository;
 
+    private static int carId1, carId2;
+
     @BeforeAll
     public static void setupData(@Autowired CarRepository car_Repository){
         carRepository = car_Repository;
         carRepository.deleteAll();
-
-        List<Car> cars = List.of(
-                new Car("Volkswagen", "Polo", 1000, 100),
-                new Car("Toyota", "Corolla", 2000, 200)
-        );
-        carRepository.saveAll(cars);
+        Car car1 = new Car("Volkswagen", "Polo", 1000, 100);
+        Car car2 = new Car("Toyota", "Corolla", 2000, 200);
+        carRepository.save(car1);
+        carRepository.save(car2);
+        carId1 = car1.getId();
+        carId2 = car2.getId();
     }
 
     @BeforeEach
@@ -61,16 +63,15 @@ class CarServiceMockWithH2Test {
     //but maven test will fail
     @Test
     void editCar() throws Exception {
-        /*CarRequest request = new CarRequest(new Car("Volkswagen", "Polo", 1000, 100));
-        int id = 3;
-        request.setId(id);
-        carService.addCar(request);
-        carService.editCar(request,id);
-        CarResponse response = carService.findCarById(id);
-        assertEquals("Volkswagen", response.getBrand());
-        assertEquals("Polo", response.getModel());
-        assertEquals(1000, response.getPricePrDay());
-        assertEquals(100, response.getBestDiscount());*/
+        Car carToEdit = carRepository.findById(carId1).get();
+        carToEdit.setPricePrDay(55);
+        carToEdit.setBestDiscount(80);
+        CarRequest request = new CarRequest(carToEdit);
+
+        carService.editCar(request, carId1);
+        Car testCar = carRepository.findById(carId1).get();
+        assertEquals(55, testCar.getPricePrDay());
+        assertEquals(80, testCar.getBestDiscount());
     }
 
     @Test
@@ -102,5 +103,6 @@ class CarServiceMockWithH2Test {
         carRepository.save(c);
         carRepository.deleteById(c.getId());
         assertEquals(2,carRepository.count());
+        System.out.println(c);
     }
 }

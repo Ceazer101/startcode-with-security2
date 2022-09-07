@@ -2,14 +2,19 @@ package dat3.cars.configuration;
 
 import dat3.cars.entity.Car;
 import dat3.cars.entity.Member;
+import dat3.cars.entity.Reservation;
 import dat3.cars.repository.CarRepository;
 import dat3.cars.repository.MemberRepository;
+import dat3.cars.repository.ReservationRepository;
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 import dat3.security.repository.UserWithRolesRepository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Controller
 public class SetupDevUsers implements ApplicationRunner {
@@ -18,25 +23,32 @@ public class SetupDevUsers implements ApplicationRunner {
     String passwordUsedByAll;
     MemberRepository memberRepository;
     CarRepository carRepository;
+    ReservationRepository reservationRepository;
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository,
-                         MemberRepository memberRepository, CarRepository carRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, MemberRepository memberRepository,
+                         CarRepository carRepository, ReservationRepository reservationRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
         passwordUsedByAll = "test12";
         this.memberRepository = memberRepository;
         this.carRepository = carRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
         setupUserWithRoleUsers();
 
-        Car car = new Car("Toyota", "Corolla", 666, 50);
-        carRepository.save(car);
+        Car c1 = new Car("Toyota", "Corolla", 666, 50);
+        carRepository.save(c1);
 
         Member m1 = new Member("userxx", passwordUsedByAll, "a@b.dk", "Kurt", "Kurtsen",
                 "Gadevej", "Helvede", "666");
         memberRepository.save(m1);
+
+        //LocalDate date = LocalDate.of(2022,9,6);
+        LocalDate date = LocalDate.now();
+        Reservation r1 = new Reservation(m1, c1, date);
+        reservationRepository.save(r1);
     }
 
     /*****************************************************************************************
