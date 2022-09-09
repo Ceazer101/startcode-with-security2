@@ -2,9 +2,11 @@ package dat3.cars.configuration;
 
 import dat3.cars.entity.Car;
 import dat3.cars.entity.Member;
+import dat3.cars.entity.Rental;
 import dat3.cars.entity.Reservation;
 import dat3.cars.repository.CarRepository;
 import dat3.cars.repository.MemberRepository;
+import dat3.cars.repository.RentalRepository;
 import dat3.cars.repository.ReservationRepository;
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import dat3.security.repository.UserWithRolesRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Controller
 public class SetupDevUsers implements ApplicationRunner {
@@ -24,14 +25,16 @@ public class SetupDevUsers implements ApplicationRunner {
     MemberRepository memberRepository;
     CarRepository carRepository;
     ReservationRepository reservationRepository;
+    RentalRepository rentalRepository;
 
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, MemberRepository memberRepository,
-                         CarRepository carRepository, ReservationRepository reservationRepository) {
+                         CarRepository carRepository, ReservationRepository reservationRepository, RentalRepository rentalRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
         passwordUsedByAll = "test12";
         this.memberRepository = memberRepository;
         this.carRepository = carRepository;
         this.reservationRepository = reservationRepository;
+        this.rentalRepository = rentalRepository;
     }
 
     @Override
@@ -49,6 +52,9 @@ public class SetupDevUsers implements ApplicationRunner {
         LocalDate date = LocalDate.now();
         Reservation r1 = new Reservation(m1, c1, date);
         reservationRepository.save(r1);
+
+        Rental rent1 = new Rental(m1, c1, date);
+        rentalRepository.save(rent1);
     }
 
     /*****************************************************************************************

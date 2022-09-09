@@ -2,9 +2,7 @@ package dat3.cars.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import dat3.cars.entity.Reservation;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,6 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReservationResponse {
 
@@ -21,7 +21,7 @@ public class ReservationResponse {
     String brand;
 
     @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime rentalDate;
+    private LocalDate rentalDate;
 
     public ReservationResponse(Reservation r) {
         this.id = r.getId();

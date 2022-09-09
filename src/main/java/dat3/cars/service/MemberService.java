@@ -56,9 +56,9 @@ public class MemberService {
     public List<MemberResponse> getMembers() {
         List<Member> members = memberRepository.findAll();
 
-        List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member,false)).collect(Collectors.toList());
+        List<MemberResponse> responses = members.stream().map(member -> new MemberResponse(member,false)).collect(Collectors.toList());
 
-        return response;
+        return responses;
     }
 
     public MemberResponse findMemberByUsername(@PathVariable String username) throws Exception {

@@ -2,11 +2,15 @@ package dat3.cars.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import dat3.cars.entity.Member;
+import dat3.cars.entity.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -30,6 +34,8 @@ public class MemberResponse {
 
     int ranking;
 
+    private List<ReservationResponse> listOfReservations = new ArrayList<>();
+
     public MemberResponse(Member m, boolean includeAll) {
         this.username = m.getUsername();
         this.email = m.getEmail();
@@ -42,6 +48,17 @@ public class MemberResponse {
             this.created = m.getCreated();
             this.edited = m.getEdited();
             this.ranking = m.getRanking();
+        }
+
+        if (m.getReservations().size() > 0) {
+            listOfReservations = m.getReservations().stream().map(r
+                    -> ReservationResponse.builder()
+                    .id(r.getId())
+                    .carId(r.getCar().getId())
+                    .brand(r.getCar().getBrand())
+                    .rentalDate(r.getRentalDate())
+                    .build()
+            ).collect(Collectors.toList());
         }
     }
 }

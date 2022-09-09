@@ -39,8 +39,15 @@ public class Car {
     @OneToMany(mappedBy = "car")
     private List<Reservation> reservations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "car1")
+    private List<Rental> rentals = new ArrayList<>();
+
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
+    }
+
+    public void addRental(Rental rental){
+        rentals.add(rental);
     }
 
     public Car(String brand, String model, double pricePrDay, double bestDiscount) {

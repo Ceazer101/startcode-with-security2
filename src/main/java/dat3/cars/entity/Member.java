@@ -38,8 +38,15 @@ public class Member extends UserWithRoles {
     @OneToMany(mappedBy = "member")
     private List<Reservation> reservations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member1")
+    private List<Rental> rentals = new ArrayList<>();
+
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
+    }
+
+    public void addRental(Rental rental){
+        rentals.add(rental);
     }
 
     public Member(String user, String password, String email, String firstName, String lastName, String street, String city, String zip) {
